@@ -7,15 +7,21 @@
 //
 
 #import "MasterViewController.h"
-
+#import "Library.h"
+#import "Shelf.h"
+#import "Book.h"
 #import "DetailViewController.h"
 
-@interface MasterViewController () {
-    NSMutableArray *_objects;
-}
-@end
-
 @implementation MasterViewController
+
+@synthesize objects = _objects;
+
+- (void)setDetailItems:(NSMutableArray*)newDetailItem
+{
+    if (_objects != newDetailItem) {
+        _objects = newDetailItem;
+    }
+}
 
 - (void)awakeFromNib
 {
@@ -30,11 +36,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,9 +54,23 @@
     if (!_objects) {
         _objects = [[NSMutableArray alloc] init];
     }
-    [_objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if ( [self.title isEqualToString:@"LibraryView"]) {
+        Library *newLib = [[Library new] init];
+        [newLib  setLibraryName:@"New Library"];
+        [_objects insertObject:newLib atIndex:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if ( [self.title isEqualToString:@"ShelfView"]) {
+        Shelf *newShelf = [[Shelf new] initWithSectionName: @"New Shelf"];
+        [_objects insertObject:newShelf atIndex:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if ( [self.title isEqualToString:@"BookView"]) {
+        Book *newBook = [[Book new] initWithTitle:@"New Title" andAuthor:@"New Author"];
+        [_objects insertObject:newBook atIndex:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 #pragma mark - Table View
@@ -67,10 +87,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    
+    UITableViewCell *cell = [tableView
+                             dequeueReusableCellWithIdentifier:@"Cell"];
+    if ( [_objects[indexPath.row] isKindOfClass:[Library class]] ) {
+        Library *lib = [_objects objectAtIndex:indexPath.row];
+        cell.textLabel.text = [lib getLibraryName];
+    } else if ( [_objects[indexPath.row] isKindOfClass:[Shelf class]] ) {
+        Shelf *shelf = [_objects objectAtIndex:indexPath.row];
+        cell.textLabel.text = [shelf getSection];
+    } else if ( [_objects[indexPath.row] isKindOfClass:[Book class]] ) {
+        Book *book = [_objects objectAtIndex:indexPath.row];
+        cell.textLabel.text = [book getTitle];
+    }
     return cell;
 }
 
@@ -108,19 +137,46 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSDate *object = _objects[indexPath.row];
-        self.detailViewController.detailItem = object;
-    }
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone"
+                                                             bundle: nil];
+    //if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        if ( [_objects[indexPath.row] isKindOfClass:[Library class]] ) {
+            Library *object = _objects[indexPath.row];
+            MasterViewController *controller = (MasterViewController*)[mainStoryboard
+                                                                       instantiateViewControllerWithIdentifier: @"ShelfView"];
+            NSMutableArray *shelves = [[NSMutableArray alloc] initWithArray:[object getShelves]];
+            
+            controller.objects = shelves;
+        } else if ( [_objects[indexPath.row] isKindOfClass:[Shelf class]] ) {
+            Shelf *object = _objects[indexPath.row];
+            MasterViewController *controller = (MasterViewController*)[mainStoryboard
+                                                               instantiateViewControllerWithIdentifier: @"BookView"];
+            NSMutableArray *books = [[NSMutableArray alloc] initWithArray:[object getBooks]];
+            controller.objects = books;
+        } else if ( [_objects[indexPath.row] isKindOfClass:[Book class]] ) {
+            Book *object = _objects[indexPath.row];
+            DetailViewController *controller = (DetailViewController*)[mainStoryboard
+                                                                       instantiateViewControllerWithIdentifier: @"DetailView"];
+           controller.detailItem = object;
+        }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([[segue identifier] isEqualToString:@"showBookDetails"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
+        Book *object = _objects[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
+    } else if ([[segue identifier] isEqualToString:@"showBooks"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSMutableArray *books = [[NSMutableArray alloc] initWithArray:[_objects[indexPath.row] getBooks]];
+        [[segue destinationViewController] setDetailItems: books];
+    }  else if ([[segue identifier] isEqualToString:@"showAllShelves"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSMutableArray *shelves = [[NSMutableArray alloc] initWithArray:[_objects[indexPath.row] getShelves]];
+        [[segue destinationViewController] setDetailItems: shelves];
     }
+    
 }
 
 @end

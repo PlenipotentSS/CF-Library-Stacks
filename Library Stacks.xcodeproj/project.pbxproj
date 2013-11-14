@@ -23,6 +23,9 @@
 		D272EC791834C1F0006D19CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC551834C1F0006D19CF /* UIKit.framework */; };
 		D272EC811834C1F0006D19CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D272EC7F1834C1F0006D19CF /* InfoPlist.strings */; };
 		D272EC831834C1F0006D19CF /* Library_StacksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC821834C1F0006D19CF /* Library_StacksTests.m */; };
+		D272EC921834C22D006D19CF /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC8D1834C22D006D19CF /* Book.m */; };
+		D272EC931834C22D006D19CF /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC8F1834C22D006D19CF /* Library.m */; };
+		D272EC941834C22D006D19CF /* Shelf.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC911834C22D006D19CF /* Shelf.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +61,16 @@
 		D272EC7E1834C1F0006D19CF /* Library StacksTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Library StacksTests-Info.plist"; sourceTree = "<group>"; };
 		D272EC801834C1F0006D19CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D272EC821834C1F0006D19CF /* Library_StacksTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Library_StacksTests.m; sourceTree = "<group>"; };
+		D272EC8C1834C22D006D19CF /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Book.h; path = "../../Public Library/Book.h"; sourceTree = "<group>"; };
+		D272EC8D1834C22D006D19CF /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Book.m; path = "../../Public Library/Book.m"; sourceTree = "<group>"; };
+		D272EC8E1834C22D006D19CF /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Library.h; path = "../../Public Library/Library.h"; sourceTree = "<group>"; };
+		D272EC8F1834C22D006D19CF /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Library.m; path = "../../Public Library/Library.m"; sourceTree = "<group>"; };
+		D272EC901834C22D006D19CF /* Shelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shelf.h; path = "../../Public Library/Shelf.h"; sourceTree = "<group>"; };
+		D272EC911834C22D006D19CF /* Shelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shelf.m; path = "../../Public Library/Shelf.m"; sourceTree = "<group>"; };
+		D272EC981834D2FE006D19CF /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		D272EC991834D2FE006D19CF /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		D272EC9A1834D2FE006D19CF /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		D272EC9B1834D2FE006D19CF /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +139,7 @@
 				D272EC6C1834C1F0006D19CF /* DetailViewController.h */,
 				D272EC6D1834C1F0006D19CF /* DetailViewController.m */,
 				D272EC6F1834C1F0006D19CF /* Images.xcassets */,
+				D272EC9D1834EF4F006D19CF /* Library Objects */,
 				D272EC581834C1F0006D19CF /* Supporting Files */,
 			);
 			path = "Library Stacks";
@@ -134,6 +148,10 @@
 		D272EC581834C1F0006D19CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D272EC981834D2FE006D19CF /* libTestFlight.a */,
+				D272EC991834D2FE006D19CF /* TestFlight.h */,
+				D272EC9A1834D2FE006D19CF /* TestFlight+AsyncLogging.h */,
+				D272EC9B1834D2FE006D19CF /* TestFlight+ManualSessions.h */,
 				D272EC591834C1F0006D19CF /* Library Stacks-Info.plist */,
 				D272EC5A1834C1F0006D19CF /* InfoPlist.strings */,
 				D272EC5D1834C1F0006D19CF /* main.m */,
@@ -158,6 +176,19 @@
 				D272EC7F1834C1F0006D19CF /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D272EC9D1834EF4F006D19CF /* Library Objects */ = {
+			isa = PBXGroup;
+			children = (
+				D272EC8C1834C22D006D19CF /* Book.h */,
+				D272EC8D1834C22D006D19CF /* Book.m */,
+				D272EC8E1834C22D006D19CF /* Library.h */,
+				D272EC8F1834C22D006D19CF /* Library.m */,
+				D272EC901834C22D006D19CF /* Shelf.h */,
+				D272EC911834C22D006D19CF /* Shelf.m */,
+			);
+			name = "Library Objects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +289,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D272EC921834C22D006D19CF /* Book.m in Sources */,
 				D272EC621834C1F0006D19CF /* AppDelegate.m in Sources */,
 				D272EC6B1834C1F0006D19CF /* MasterViewController.m in Sources */,
+				D272EC931834C22D006D19CF /* Library.m in Sources */,
 				D272EC5E1834C1F0006D19CF /* main.m in Sources */,
+				D272EC941834C22D006D19CF /* Shelf.m in Sources */,
 				D272EC6E1834C1F0006D19CF /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,7 +435,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Library Stacks/Library Stacks-Prefix.pch";
 				INFOPLIST_FILE = "Library Stacks/Library Stacks-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/OmniGlot/Dropbox/Xcode\\ projects/Library\\ Stacks/Library\\ Stacks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -414,7 +454,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Library Stacks/Library Stacks-Prefix.pch";
 				INFOPLIST_FILE = "Library Stacks/Library Stacks-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/OmniGlot/Dropbox/Xcode\\ projects/Library\\ Stacks/Library\\ Stacks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -480,6 +526,7 @@
 				D272EC881834C1F0006D19CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D272EC891834C1F0006D19CF /* Build configuration list for PBXNativeTarget "Library StacksTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +535,7 @@
 				D272EC8B1834C1F0006D19CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

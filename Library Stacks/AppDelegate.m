@@ -7,17 +7,61 @@
 //
 
 #import "AppDelegate.h"
+//#import "TestFlight.h"
+#import "MasterViewController.h"
+#import "Library.h"
+#import "Shelf.h"
+#import "Book.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //[TestFlight takeOff:@"a86439e2-9ce8-4156-90b9-d644b00b7182"];
+    
+    NSArray *sectionNames = @[@"Fiction",@"Non-Fiction",@"Children",@"Fantasy",@"Education"];
+    NSArray *titles = @[@"Ender's Game", @"Lord of the Rings", @"Steve Jobs", @"Go Dog Go", @"Topics in Mathematical Models", @"Sherlock Homes",@"Charlotte's Web",@"I am Malala",@"The Help",@"Harry Potter"];
+    NSArray *authors = @[@"Orson Scott Card",@"J.R.R. Toklien",@"Walter Isaacson",@"P.D. Eastman",@"K.K. Tung",@"Arthur Conan Doyle",@"E.B. White",@"Christina Lamb",@"Kahtryn Stocket",@"J.K. Rowling"];
+    
+    //create the library with shelves by section names
+    //NSLog (@"Creating Library with Shelves");
+    Library *myLibrary = [[Library new] initWithShelfNames:sectionNames];
+    [myLibrary setLibraryName:@"The Best Library"];
+    
+    //create the books from array
+    //NSLog(@"Creating Books...");
+    NSMutableArray *theBooks = [[NSMutableArray new] init];
+    for (int i = 0; i <10; i++ ) {
+        Book *thisBook = [[Book new] initWithTitle:[titles objectAtIndex:i] andAuthor:[authors objectAtIndex:i]];
+        [theBooks addObject:thisBook];
+    }
+    
+    //add books to shelves
+    //NSLog (@"Putting Books on Shelves");
+    [[theBooks objectAtIndex:0] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
+    [[theBooks objectAtIndex:1] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
+    [[theBooks objectAtIndex:2] enShelf:[[myLibrary getShelves] objectAtIndex:1]];
+    [[theBooks objectAtIndex:3] enShelf:[[myLibrary getShelves] objectAtIndex:2]];
+    [[theBooks objectAtIndex:4] enShelf:[[myLibrary getShelves] objectAtIndex:4]];
+    [[theBooks objectAtIndex:5] enShelf:[[myLibrary getShelves] objectAtIndex:0]];
+    [[theBooks objectAtIndex:6] enShelf:[[myLibrary getShelves] objectAtIndex:2]];
+    [[theBooks objectAtIndex:7] enShelf:[[myLibrary getShelves] objectAtIndex:1]];
+    [[theBooks objectAtIndex:8] enShelf:[[myLibrary getShelves] objectAtIndex:0]];
+    [[theBooks objectAtIndex:9] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
+    
+    NSMutableArray *libraries = [[NSMutableArray alloc] initWithArray: @[myLibrary]];
+    
+    UINavigationController * navController = (UINavigationController *) self.window.rootViewController;
+    MasterViewController * masterController = [navController.viewControllers objectAtIndex:0];
+    masterController.objects = libraries;
+    
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
         splitViewController.delegate = (id)navigationController.topViewController;
     }
+    
     return YES;
 }
 							
