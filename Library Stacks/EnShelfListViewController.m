@@ -5,6 +5,9 @@
 //  Created by Steven Stevenson on 11/15/13.
 //  Copyright (c) 2013 Steven Stevenson. All rights reserved.
 //
+//  Simple Table View Controller for Selecting which shelf
+//  a book should be shelved to
+//
 
 #import "EnShelfListViewController.h"
 #import "Library.h"
@@ -15,15 +18,24 @@
 @synthesize objects = _objects;
 @synthesize shelfDelegate;
 
+/*
+ *  Initial setup of view controller to select Shelf for enshelf.
+ *  Sets offset to 1 to remove Unshelved Books from possible selction
+ *
+ */
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        offset = 1;
     }
     return self;
 }
 
+/*
+ *  setup view on load
+ *
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,46 +44,68 @@
     self.navigationItem.leftBarButtonItem = cancelButton;
 }
 
+/*
+ *  sender method to dimiss current view
+ *
+ */
 -(void) dismissView:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+/*
+ *  returns only this section of objects
+ *
+ */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
+/*
+ *  returns the count of shelves in _objects (less Unshelved Books)
+ *
+ */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_objects count];
+    return [_objects count]-1;
 }
 
+/*
+ *  Selects the current row cell and saves to self.shelfDelegate for object retreival in
+ *  linked protocol controller method
+ *
+ */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if([self.shelfDelegate respondsToSelector:@selector(dismissShelfOptionController:)])
     {
-        [self.shelfDelegate dismissShelfOptionController: _objects[indexPath.row]];
+        [self.shelfDelegate dismissShelfOptionController: _objects[indexPath.row+offset]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 
+/*
+ *  puts shelf information in table view cell for selection
+ *
+ */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //static NSString *CellIdentifier = @"Cell2";
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-    Shelf *theShelf = [_objects objectAtIndex:indexPath.row];
+    Shelf *theShelf = [_objects objectAtIndex:indexPath.row+offset];
     cell.textLabel.text = [theShelf getSection];
     
     return cell;
+}
+
+/*
+ *  Memory Cleanup
+ *
+ */
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
 }
 
 @end

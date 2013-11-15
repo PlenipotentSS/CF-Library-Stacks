@@ -5,6 +5,9 @@
 //  Created by Steven Stevenson on 11/14/13.
 //  Copyright (c) 2013 Steven Stevenson. All rights reserved.
 //
+//  The view controller that contains the structure of browsing
+//  through the library.
+//
 
 #import "MasterViewController.h"
 #import "Library.h"
@@ -23,10 +26,12 @@
 @synthesize updateNeeded;
 
 /*
+ *  @param newDetailItem:newDetailItem a NSMutable Array containing the list of
+ *      for this level of browsing
+ *  @param setDetailParent:newParent the parent object of the current list of
+ *      objects
  *
- *
- *
- *
+ *  Adding initial variables for browsing
  *
  */
 - (void)setDetailItems:(NSMutableArray*) newDetailItem setDetailParent: (NSObject*) newParent {
@@ -39,53 +44,25 @@
 }
 
 /*
- *
- *
- *
- *
- *
- */
-- (void)awakeFromNib {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.clearsSelectionOnViewWillAppear = NO;
-        self.preferredContentSize = CGSizeMake(320.0, 600.0);
-    }
-    [super awakeFromNib];
-}
-
-/*
- *
- *
- *
- *
+ *  setup on view load
  *
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
 }
 
 /*
- *
- *
- *
- *
+ *  As TableView will appear, prepare table for update or otherwise
  *
  */
 - (void)viewWillAppear:(BOOL)animated {
-    if (updateNeeded){
-    }
     [self.tableView reloadData];
 }
 
 /*
- *
- *
- *
- *
+ *  Memory cleanup of variables
  *
  */
 - (void)didReceiveMemoryWarning {
@@ -94,10 +71,11 @@
 }
 
 /*
+ *  If add button was pressed, create input controller for new object
+ *  variables
  *
- *
- *
- *
+ *  customized setup of input controller given if new input controller BOOl
+ *  [addingABook] is true
  *
  */
 - (void)insertNewObject:(id)sender {
@@ -117,11 +95,11 @@
     [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
 }
 
-/*
- *
- *
- *
- *
+/*  @param saveObjectName is a NSString* containing the updated or new
+ *      object variables
+ *  
+ *  used only to add or edit variables returning from ItemInputController
+ *  protocol
  *
  */
 -(void) dismissItemInputController: (NSString *)saveObjectName {
@@ -142,10 +120,9 @@
 }
 
 /*
- *
- *
- *
- *
+ *  Adds objects with data stored in self.addedObjectName - suggested to
+ *  implicitly set self.addedObjectName with information before calling
+ *  addObjectData method
  *
  */
 - (void) addObjectData {
@@ -194,10 +171,7 @@
 }
 
 /*
- *
- *
- *
- *
+ *  returns only this section of objects
  *
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -205,10 +179,7 @@
 }
 
 /*
- *
- *
- *
- *
+ *  returns the count of _objects in current object
  *
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -216,10 +187,8 @@
 }
 
 /*
- *
- *
- *
- *
+ *  puts object information in table view cell and adds edit button
+ *  for parent objects created by data for library
  *
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -257,10 +226,8 @@
 }
 
 /*
- *
- *
- *
- *
+ *  Edit Button on object cell is pressed and opens input controller
+ *  for updating the object
  *
  */
 -(void) editButtonPressed:(editButton*)sender {
@@ -283,10 +250,7 @@
 }
 
 /*
- *
- *
- *
- *
+ *  Rows can be edited at indexpath!
  *
  */
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -294,10 +258,7 @@
 }
 
 /*
- *
- *
- *
- *
+ *  Only used for Deleting cells from the list
  *
  */
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -315,16 +276,15 @@
 }
 
 /*
- *
- *
- *
- *
+ *  Using Storyboard segue names, provide object information for the next
+ *  view controller
  *
  */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showBookDetails"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Book *object = _objects[indexPath.row];
+        [[segue destinationViewController] setPrevious_vc:self];
         [[segue destinationViewController] setDetailItem:object];
         UINavigationItem *theNav = [[segue destinationViewController] navigationItem];
         theNav.title = [_objects[indexPath.row] getTitle];

@@ -5,6 +5,10 @@
 //  Created by Steven Stevenson on 11/14/13.
 //  Copyright (c) 2013 Steven Stevenson. All rights reserved.
 //
+//  General View Controller for editing any of the objects.
+//  This implementation can be customized given the object
+//  wished to be updated.
+//
 
 #import "ItemInputController.h"
 #import "MasterViewController.h"
@@ -23,10 +27,7 @@
 @synthesize enShelfBut;
 
 /*
- *
- *
- *
- *
+ *  Setup ItemInputController
  *
  */
 -(id)init {
@@ -41,25 +42,8 @@
 }
 
 /*
- *
- *
- *
- *
- *
- */
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-/*
- *
- *
- *
- *
+ *  declare textFields for controller, but does not attach to view, for
+ *  purpose of data pre-load to current view controller
  *
  */
 -(void) makeTextFields {
@@ -73,10 +57,10 @@
 }
 
 /*
+ *  Creates View controller for a list of shelves to select for enshelving
+ *  book objects
  *
- *
- *
- *
+ *  Warning: Call only if object to be updated is of type Book
  *
  */
 -(void) addShelvingOptions {
@@ -108,10 +92,8 @@
 }
 
 /*
- *
- *
- *
- *
+ *  method for button object to remove book from any shelf and inform
+ *  user of action
  *
  */
 -(void) takeBookOffShelf:(UIButton*)sender {
@@ -124,15 +106,11 @@
     UIAlertView *messageAlert = [[UIAlertView alloc]
                                  initWithTitle:@"Book Removed From Shelf!" message:[NSString stringWithFormat:@"You've unshelved %@",[updateBookObject getTitle]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [messageAlert show];
-    
-#warning need to update lists somehow!!!
 }
 
 /*
- *
- *
- *
- *
+ *  method for button object to put on a shelf by create view controller
+ *  to select which shelf
  *
  */
 -(void) putBookOnShelf:(UIButton*)sender {
@@ -150,27 +128,21 @@
     [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
 }
 
-/*
+/*  @param chosenShelf is a Shelf* containing the shelf chosen for book object
+ *  to be shelved (must be called via EnShelfListViewController protocol)
  *
- *
- *
- *
- *
+ *  used to add Book to Shelf and inform user of action
  */
 -(void) dismissShelfOptionController: (Shelf *)chosenShelf {
     [updateBookObject enShelf: chosenShelf];
     UIAlertView *messageAlert = [[UIAlertView alloc]
                                  initWithTitle:@"Book Reshelved!" message:[NSString stringWithFormat:@"You've reshelved to %@",[chosenShelf getSection]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [messageAlert show];
-    
-#warning need to update lists somehow!!
 }
 
 /*
- *
- *
- *
- *
+ *  setup on view load and attach labels and buttons according to how
+ *  input view controller is being used
  *
  */
 - (void)viewDidLoad {
@@ -221,10 +193,7 @@
 }
 
 /*
- *
- *
- *
- *
+ *  sender method to dimiss current view
  *
  */
 -(void) dismissView:(id)sender {
@@ -233,10 +202,8 @@
 
 
 /*
- *
- *
- *
- *
+ *  Storing information before dismissal of view controller to save data
+ *  for parent view controller.
  *
  */
 -(void)saveInfo:sender {
@@ -252,10 +219,7 @@
 }
 
 /*
- *
- *
- *
- *
+ *  Memory cleanup of variables
  *
  */
 - (void)didReceiveMemoryWarning {

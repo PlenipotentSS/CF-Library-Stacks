@@ -5,6 +5,8 @@
 //  Created by Steven Stevenson on 11/14/13.
 //  Copyright (c) 2013 Steven Stevenson. All rights reserved.
 //
+//  the Delegate!
+//
 
 #import "AppDelegate.h"
 //#import "TestFlight.h"
@@ -16,10 +18,7 @@
 @implementation AppDelegate
 
 /*
- *
- *
- *
- *
+ *  Create initial Library/Shelf and Book variables for viewing
  *
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

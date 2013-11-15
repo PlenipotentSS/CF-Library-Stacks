@@ -5,6 +5,10 @@
 //  Created by Steven Stevenson on 11/14/13.
 //  Copyright (c) 2013 Steven Stevenson. All rights reserved.
 //
+//  General View Controller for editing any of the objects.
+//  This implementation can be customized given the object
+//  wished to be updated.
+//
 
 #import <UIKit/UIKit.h>
 #import "Book.h"
