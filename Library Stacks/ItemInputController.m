@@ -8,6 +8,7 @@
 
 #import "ItemInputController.h"
 #import "MasterViewController.h"
+#import "Library.h"
 
 @implementation ItemInputController
 
@@ -119,6 +120,12 @@
     [unShelfBut setAlpha:.2];
     enShelfBut.enabled = YES;
     unShelfBut.enabled = NO;
+    
+    UIAlertView *messageAlert = [[UIAlertView alloc]
+                                 initWithTitle:@"Book Removed From Shelf!" message:[NSString stringWithFormat:@"You've unshelved %@",[updateBookObject getTitle]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [messageAlert show];
+    
+#warning need to update lists somehow!!!
 }
 
 /*
@@ -129,11 +136,34 @@
  *
  */
 -(void) putBookOnShelf:(UIButton*)sender {
-    //[updateBookObject enShelf:];
+    Library *thisLibrary = [[updateBookObject getLocation] getLocation];
     [enShelfBut setAlpha:.2];
     [unShelfBut setAlpha:1.0];
     enShelfBut.enabled = NO;
     unShelfBut.enabled = YES;
+    
+    EnShelfListViewController  *shelfListController = [[EnShelfListViewController alloc] init];
+    shelfListController.objects = [[NSMutableArray alloc] initWithArray:[thisLibrary getShelves]];
+    shelfListController.shelfDelegate = self;
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: shelfListController];
+    [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+-(void) dismissShelfOptionController: (Shelf *)chosenShelf {
+    [updateBookObject enShelf: chosenShelf];
+    UIAlertView *messageAlert = [[UIAlertView alloc]
+                                 initWithTitle:@"Book Reshelved!" message:[NSString stringWithFormat:@"You've reshelved to %@",[chosenShelf getSection]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [messageAlert show];
+    
+#warning need to update lists somehow!!
 }
 
 /*

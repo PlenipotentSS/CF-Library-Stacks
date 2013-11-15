@@ -28,7 +28,7 @@
     if (detailItem != newDetailItem) {
         detailItem = newDetailItem;
         
-        // Update the view.
+        NSLog(@"%@",[[detailItem getLocation] getSection]);
         [self configureView];
     }     
 }
@@ -75,7 +75,6 @@
 -(void) setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     if (editing) {
-        NSLog(@"Edit Book Info");
         itemInputController = [[ItemInputController alloc] init];
         
         itemInputController.navTitle = @"Edit Book";

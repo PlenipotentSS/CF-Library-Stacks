@@ -29,6 +29,7 @@
 		D2C684461835A83500CC47B7 /* ItemInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C684451835A83500CC47B7 /* ItemInputController.m */; };
 		D2EF0ADF18360437002A7F90 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = D2EF0ADE18360437002A7F90 /* edit.png */; };
 		D2EF0AE218360908002A7F90 /* editButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EF0AE118360908002A7F90 /* editButton.m */; };
+		D2EF0AE818364A27002A7F90 /* EnShelfListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EF0AE718364A27002A7F90 /* EnShelfListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		D2EF0ADE18360437002A7F90 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		D2EF0AE018360908002A7F90 /* editButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editButton.h; sourceTree = "<group>"; };
 		D2EF0AE118360908002A7F90 /* editButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = editButton.m; sourceTree = "<group>"; };
+		D2EF0AE618364A27002A7F90 /* EnShelfListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnShelfListViewController.h; sourceTree = "<group>"; };
+		D2EF0AE718364A27002A7F90 /* EnShelfListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnShelfListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 				D272EC6D1834C1F0006D19CF /* DetailViewController.m */,
 				D2EF0AE018360908002A7F90 /* editButton.h */,
 				D2EF0AE118360908002A7F90 /* editButton.m */,
+				D2EF0AE618364A27002A7F90 /* EnShelfListViewController.h */,
+				D2EF0AE718364A27002A7F90 /* EnShelfListViewController.m */,
 				D272EC6F1834C1F0006D19CF /* Images.xcassets */,
 				D272EC9D1834EF4F006D19CF /* Library Objects */,
 				D272EC581834C1F0006D19CF /* Supporting Files */,
@@ -307,6 +312,7 @@
 				D272EC621834C1F0006D19CF /* AppDelegate.m in Sources */,
 				D272EC6B1834C1F0006D19CF /* MasterViewController.m in Sources */,
 				D272EC931834C22D006D19CF /* Library.m in Sources */,
+				D2EF0AE818364A27002A7F90 /* EnShelfListViewController.m in Sources */,
 				D272EC5E1834C1F0006D19CF /* main.m in Sources */,
 				D272EC941834C22D006D19CF /* Shelf.m in Sources */,
 				D272EC6E1834C1F0006D19CF /* DetailViewController.m in Sources */,

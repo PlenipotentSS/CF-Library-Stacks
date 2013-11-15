@@ -27,4 +27,5 @@
 - (void) setDetailItems:(NSMutableArray*)newDetailItem setDetailParent: (NSObject*) newParent;
 - (void) insertNewObject:(id)sender;
 -(void) editButtonPressed:(editButton*)sender;
+-(void) dismissItemInputController: (NSString *)saveObjectName;
 @end

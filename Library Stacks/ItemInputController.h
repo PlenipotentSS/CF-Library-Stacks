@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Book.h"
 #import "Shelf.h"
+#import "EnShelfListViewController.h"
 
 @protocol ItemInputDelegate <NSObject>
 -(void) dismissItemInputController: (NSString *)saveObjectName;
 @end
 
-@interface ItemInputController : UIViewController
+@interface ItemInputController : UIViewController <EnShelfListDelegate>
 
 @property(nonatomic, assign) id<ItemInputDelegate> myInputDelegate;
 @property(strong) NSString *navTitle;
@@ -31,4 +32,5 @@
 -(void) makeTextFields;
 -(void) dismissView:(id)sender;
 -(void) addShelvingOptions;
+-(void) dismissShelfOptionController: (Shelf *)chosenShelf;
 @end
