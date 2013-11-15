@@ -39,17 +39,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissView:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
-}
-
-/*
- *  sender method to dimiss current view
- *
- */
--(void) dismissView:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
