@@ -35,7 +35,9 @@
     self.navigationItem.title = self.navTitle;
     self.view.backgroundColor = [UIColor whiteColor];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveInfo:)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissView:)];
     self.navigationItem.rightBarButtonItem = saveButton;
+    self.navigationItem.leftBarButtonItem = cancelButton;
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
@@ -71,6 +73,10 @@
     }
     
 
+}
+
+-(void) dismissView:sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
