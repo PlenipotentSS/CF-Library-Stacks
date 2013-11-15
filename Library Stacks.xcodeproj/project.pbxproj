@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D25546591834FDD2005BCD97 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC981834D2FE006D19CF /* libTestFlight.a */; };
 		D272EC521834C1F0006D19CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC511834C1F0006D19CF /* Foundation.framework */; };
 		D272EC541834C1F0006D19CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC531834C1F0006D19CF /* CoreGraphics.framework */; };
 		D272EC561834C1F0006D19CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC551834C1F0006D19CF /* UIKit.framework */; };
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D25546591834FDD2005BCD97 /* libTestFlight.a in Frameworks */,
 				D272EC541834C1F0006D19CF /* CoreGraphics.framework in Frameworks */,
 				D272EC561834C1F0006D19CF /* UIKit.framework in Frameworks */,
 				D272EC521834C1F0006D19CF /* Foundation.framework in Frameworks */,

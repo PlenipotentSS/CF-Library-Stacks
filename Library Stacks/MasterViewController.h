@@ -13,6 +13,7 @@
 @interface MasterViewController : UITableViewController
 
 @property (strong) NSMutableArray *objects;
+@property(strong) NSObject *parent;
 
-- (void)setDetailItems:(NSMutableArray*)newDetailItem;
+- (void)setDetailItems:(NSMutableArray*)newDetailItem setDetailParent: (NSObject*) newParent;
 @end
