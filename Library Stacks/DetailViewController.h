@@ -14,4 +14,5 @@
 @property (strong, nonatomic) Book *detailItem;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @end

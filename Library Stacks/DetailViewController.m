@@ -36,8 +36,10 @@
     // Update the user interface for the detail item.
     if ([[self detailItem] isKindOfClass:[Book class]]) {
         self.detailDescriptionLabel.text = [self.detailItem getTitle];
+        self.authorLabel.text = [self.detailItem getAuthor];
     } else {
-        self.detailDescriptionLabel.text = @"detail Item not passed on";
+        self.detailDescriptionLabel.text = @"Title Not Found";
+        self.authorLabel.text = @"Author Not Found";
     }
 }
 

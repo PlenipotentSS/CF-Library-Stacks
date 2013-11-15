@@ -27,6 +27,7 @@
 		D272EC921834C22D006D19CF /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC8D1834C22D006D19CF /* Book.m */; };
 		D272EC931834C22D006D19CF /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC8F1834C22D006D19CF /* Library.m */; };
 		D272EC941834C22D006D19CF /* Shelf.m in Sources */ = {isa = PBXBuildFile; fileRef = D272EC911834C22D006D19CF /* Shelf.m */; };
+		D2C684461835A83500CC47B7 /* ItemInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C684451835A83500CC47B7 /* ItemInputController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		D272EC991834D2FE006D19CF /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		D272EC9A1834D2FE006D19CF /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		D272EC9B1834D2FE006D19CF /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		D2C684441835A83500CC47B7 /* ItemInputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemInputController.h; sourceTree = "<group>"; };
+		D2C684451835A83500CC47B7 /* ItemInputController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemInputController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,8 @@
 				D272EC661834C1F0006D19CF /* Main_iPad.storyboard */,
 				D272EC691834C1F0006D19CF /* MasterViewController.h */,
 				D272EC6A1834C1F0006D19CF /* MasterViewController.m */,
+				D2C684441835A83500CC47B7 /* ItemInputController.h */,
+				D2C684451835A83500CC47B7 /* ItemInputController.m */,
 				D272EC6C1834C1F0006D19CF /* DetailViewController.h */,
 				D272EC6D1834C1F0006D19CF /* DetailViewController.m */,
 				D272EC6F1834C1F0006D19CF /* Images.xcassets */,
@@ -291,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2C684461835A83500CC47B7 /* ItemInputController.m in Sources */,
 				D272EC921834C22D006D19CF /* Book.m in Sources */,
 				D272EC621834C1F0006D19CF /* AppDelegate.m in Sources */,
 				D272EC6B1834C1F0006D19CF /* MasterViewController.m in Sources */,

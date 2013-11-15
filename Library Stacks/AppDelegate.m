@@ -38,16 +38,16 @@
     
     //add books to shelves
     //NSLog (@"Putting Books on Shelves");
-    [[theBooks objectAtIndex:0] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
-    [[theBooks objectAtIndex:1] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
-    [[theBooks objectAtIndex:2] enShelf:[[myLibrary getShelves] objectAtIndex:1]];
-    [[theBooks objectAtIndex:3] enShelf:[[myLibrary getShelves] objectAtIndex:2]];
-    [[theBooks objectAtIndex:4] enShelf:[[myLibrary getShelves] objectAtIndex:4]];
-    [[theBooks objectAtIndex:5] enShelf:[[myLibrary getShelves] objectAtIndex:0]];
-    [[theBooks objectAtIndex:6] enShelf:[[myLibrary getShelves] objectAtIndex:2]];
-    [[theBooks objectAtIndex:7] enShelf:[[myLibrary getShelves] objectAtIndex:1]];
-    [[theBooks objectAtIndex:8] enShelf:[[myLibrary getShelves] objectAtIndex:0]];
-    [[theBooks objectAtIndex:9] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
+    [[theBooks objectAtIndex:0] enShelf:[[myLibrary getShelves] objectAtIndex:4]];
+    [[theBooks objectAtIndex:1] enShelf:[[myLibrary getShelves] objectAtIndex:4]];
+    [[theBooks objectAtIndex:2] enShelf:[[myLibrary getShelves] objectAtIndex:2]];
+    [[theBooks objectAtIndex:3] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
+    [[theBooks objectAtIndex:4] enShelf:[[myLibrary getShelves] objectAtIndex:5]];
+    [[theBooks objectAtIndex:5] enShelf:[[myLibrary getShelves] objectAtIndex:1]];
+    [[theBooks objectAtIndex:6] enShelf:[[myLibrary getShelves] objectAtIndex:3]];
+    [[theBooks objectAtIndex:7] enShelf:[[myLibrary getShelves] objectAtIndex:2]];
+    [[theBooks objectAtIndex:8] enShelf:[[myLibrary getShelves] objectAtIndex:1]];
+    [[theBooks objectAtIndex:9] enShelf:[[myLibrary getShelves] objectAtIndex:4]];
     
     NSMutableArray *libraries = [[NSMutableArray alloc] initWithArray: @[myLibrary]];
     
