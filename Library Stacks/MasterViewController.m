@@ -11,7 +11,7 @@
 #import "Shelf.h"
 #import "Book.h"
 #import "DetailViewController.h"
-#import "editButton.h"
+
 
 @implementation MasterViewController
 
@@ -20,9 +20,16 @@
 @synthesize itemInputController;
 @synthesize addedObjectName;
 @synthesize editPath;
+@synthesize updateNeeded;
 
-- (void)setDetailItems:(NSMutableArray*) newDetailItem setDetailParent: (NSObject*) newParent
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)setDetailItems:(NSMutableArray*) newDetailItem setDetailParent: (NSObject*) newParent {
     if (_objects != newDetailItem) {
         _objects = newDetailItem;
     }
@@ -31,8 +38,14 @@
     }
 }
 
-- (void)awakeFromNib
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)awakeFromNib {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
         self.preferredContentSize = CGSizeMake(320.0, 600.0);
@@ -40,24 +53,54 @@
     [super awakeFromNib];
 }
 
-- (void)viewDidLoad
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
 }
 
-- (void)didReceiveMemoryWarning
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)viewWillAppear:(BOOL)animated {
+    if (updateNeeded){
+    }
+    [self.tableView reloadData];
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)insertNewObject:(id)sender {
     self.editPath = NULL;
     itemInputController = [[ItemInputController alloc] init];
     if ( [self.title isEqualToString:@"LibraryView"]) {
@@ -74,6 +117,13 @@
     [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
 }
 
+/*
+ *
+ *
+ *
+ *
+ *
+ */
 -(void) dismissItemInputController: (NSString *)saveObjectName {
     if ( self.editPath ) {
         if ( [_objects[self.editPath.row] isKindOfClass:[Library class]] ) {
@@ -91,6 +141,13 @@
 
 }
 
+/*
+ *
+ *
+ *
+ *
+ *
+ */
 - (void) addObjectData {
     NSString *objectName = self.addedObjectName;
     if (!objectName) {
@@ -119,10 +176,10 @@
     } else if ( [self.title isEqualToString:@"BookView"]) {
         NSString *bookTitle = @"New Title";
         NSString *bookAuthor = @"New Author";
-        if ([objectName rangeOfString:@"|"].location == NSNotFound){
+        if ([objectName rangeOfString:@"|"].location != NSNotFound){
             NSArray *bookDetails = [objectName componentsSeparatedByString:@"|"];
-            bookTitle = [bookDetails objectAtIndex:0];
-            bookAuthor = [bookDetails objectAtIndex:1];
+            bookTitle = [bookDetails objectAtIndex:1];
+            bookAuthor = [bookDetails objectAtIndex:0];
         }
         Book *newBook = [[Book new] initWithTitle:bookTitle andAuthor:bookAuthor];
         [newBook enShelf: (Shelf*)parent];
@@ -136,20 +193,36 @@
     
 }
 
-#pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _objects.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
     if ( [_objects[indexPath.row] isKindOfClass:[Book class]] ) {
@@ -167,8 +240,10 @@
         
         [editBut setUserData: indexPath];
         [editBut addTarget:self action:@selector(editButtonPressed:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
-        [cell addSubview:editBut];
-        
+        if (![_objects[indexPath.row] isKindOfClass:[Shelf class]] || ![[_objects[indexPath.row] getSection] isEqualToString:@"Unshelved Books"]) {
+            [cell addSubview:editBut];
+        }
+            
         cell.indentationWidth = 30;
         if ( [_objects[indexPath.row] isKindOfClass:[Library class]] ) {
             Library *lib = [_objects objectAtIndex:indexPath.row];
@@ -181,10 +256,15 @@
     return cell;
 }
 
+/*
+ *
+ *
+ *
+ *
+ *
+ */
 -(void) editButtonPressed:(editButton*)sender {
     itemInputController = [[ItemInputController alloc] init];
-    itemInputController.edittingObject = YES;
-    
     
     NSIndexPath *thePath = sender.userData;
     self.editPath = thePath;
@@ -202,35 +282,53 @@
     [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if ( [[_objects objectAtIndex:indexPath.row] isKindOfClass:[Shelf class]]) {
             Shelf *delShelf = [_objects objectAtIndex:indexPath.row];
             [[delShelf getLocation] removeShelf:delShelf];
         } else if ( [[_objects objectAtIndex:indexPath.row] isKindOfClass:[Book class]]) {
             Book *deleteBook = [_objects objectAtIndex:indexPath.row];
-            [deleteBook unShelf];
+            [deleteBook destroyBook];
         }
         [_objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showBookDetails"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Book *object = _objects[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
         UINavigationItem *theNav = [[segue destinationViewController] navigationItem];
         theNav.title = [_objects[indexPath.row] getTitle];
+        updateNeeded = YES;
     } else if ([[segue identifier] isEqualToString:@"showBooks"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSMutableArray *books = [[NSMutableArray alloc] initWithArray:[_objects[indexPath.row] getBooks]];
@@ -244,7 +342,6 @@
         UINavigationItem *theNav = [[segue destinationViewController] navigationItem];
         theNav.title = [_objects[indexPath.row] getLibraryName];
     }
-    
 }
 
 @end

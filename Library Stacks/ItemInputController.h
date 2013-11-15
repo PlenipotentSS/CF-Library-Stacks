@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Book.h"
+#import "Shelf.h"
 
 @protocol ItemInputDelegate <NSObject>
 -(void) dismissItemInputController: (NSString *)saveObjectName;
@@ -16,11 +18,17 @@
 
 @property(nonatomic, assign) id<ItemInputDelegate> myInputDelegate;
 @property(strong) NSString *navTitle;
-@property(strong) NSString *objectName;
 @property(strong) UITextField *theTextField;
 @property(strong) UITextField *secondTextField;
+@property(strong) NSString *objectName;
 @property BOOL addingABook;
-@property BOOL edittingObject;
+@property(strong) Book *updateBookObject;
+@property(strong) UIButton *unShelfBut;
+@property(strong) UIButton *enShelfBut;
 
--(void)saveInfo:sender;
+
+-(void) saveInfo:sender;
+-(void) makeTextFields;
+-(void) dismissView:(id)sender;
+-(void) addShelvingOptions;
 @end

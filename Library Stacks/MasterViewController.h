@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ItemInputController.h"
+#import "editButton.h"
 
 @class DetailViewController;
 
@@ -20,7 +21,10 @@
 @property(strong) NSString *addedObjectName;
 @property(strong) ItemInputController *itemInputController;
 @property(strong) NSIndexPath *editPath;
+@property BOOL updateNeeded;
 
 - (void) addObjectData;
-- (void)setDetailItems:(NSMutableArray*)newDetailItem setDetailParent: (NSObject*) newParent;
+- (void) setDetailItems:(NSMutableArray*)newDetailItem setDetailParent: (NSObject*) newParent;
+- (void) insertNewObject:(id)sender;
+-(void) editButtonPressed:(editButton*)sender;
 @end

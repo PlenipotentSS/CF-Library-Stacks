@@ -7,33 +7,40 @@
 //
 
 #import "DetailViewController.h"
+#import "Book.h"
 
-@interface DetailViewController ()
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
-@end
 
 @implementation DetailViewController
 
-#pragma mark - Managing the detail item
+@synthesize detailItem;
+@synthesize detailDescriptionLabel;
+@synthesize authorLabel;
+@synthesize itemInputController;
 
-- (void)setDetailItem:(Book*)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)setDetailItem:(Book*)newDetailItem {
+    if (detailItem != newDetailItem) {
+        detailItem = newDetailItem;
         
         // Update the view.
         [self configureView];
-    }
-
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
+    }     
 }
 
-- (void)configureView
-{
-    // Update the user interface for the detail item.
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)configureView {
     if ([[self detailItem] isKindOfClass:[Book class]]) {
         self.detailDescriptionLabel.text = [self.detailItem getTitle];
         self.authorLabel.text = [self.detailItem getAuthor];
@@ -43,34 +50,80 @@
     }
 }
 
-- (void)viewDidLoad
-{
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self configureView];
 }
 
-- (void)didReceiveMemoryWarning
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+-(void) setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    if (editing) {
+        NSLog(@"Edit Book Info");
+        itemInputController = [[ItemInputController alloc] init];
+        
+        itemInputController.navTitle = @"Edit Book";
+        itemInputController.theTextField.text = [detailItem getAuthor];
+        itemInputController.secondTextField.text = [detailItem getTitle];
+        itemInputController.updateBookObject = detailItem;
+        [itemInputController addShelvingOptions];
+        [itemInputController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+        
+        itemInputController.myInputDelegate = self;
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: itemInputController];
+        [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
+        [super setEditing:NO animated:NO];
+    }
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+-(void) dismissItemInputController: (NSString *)saveObjectName {
+    
+    NSString *bookTitle = [self.detailItem getTitle];
+    NSString *bookAuthor = [self.detailItem getAuthor];
+    if ([saveObjectName rangeOfString:@"|"].location != NSNotFound){
+        NSArray *bookDetails = [saveObjectName componentsSeparatedByString:@"|"];
+        bookTitle = [bookDetails objectAtIndex:1];
+        bookAuthor = [bookDetails objectAtIndex:0];
+    }
+    [self.detailItem setTitle: bookTitle];
+    [self.detailItem setAuthor: bookAuthor];
+    self.detailDescriptionLabel.text = bookTitle;
+    self.authorLabel.text = bookAuthor;
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Split view
-
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
-}
-
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
 }
 
 @end

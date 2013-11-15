@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Book.h"
+#import "ItemInputController.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface DetailViewController : UIViewController <ItemInputDelegate>
 
 @property (strong, nonatomic) Book *detailItem;
-
+@property(strong) ItemInputController *itemInputController;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
+
+- (void)setDetailItem:(Book*)newDetailItem;
 @end

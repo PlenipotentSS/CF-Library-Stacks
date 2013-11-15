@@ -15,13 +15,19 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //[TestFlight takeOff:@"a86439e2-9ce8-4156-90b9-d644b00b7182"];
     
     NSArray *sectionNames = @[@"Fiction",@"Non-Fiction",@"Children",@"Fantasy",@"Education"];
     NSArray *titles = @[@"Ender's Game", @"Lord of the Rings", @"Steve Jobs", @"Go Dog Go", @"Topics in Mathematical Models", @"Sherlock Homes",@"Charlotte's Web",@"I am Malala",@"The Help",@"Harry Potter"];
-    NSArray *authors = @[@"Orson Scott Card",@"J.R.R. Toklien",@"Walter Isaacson",@"P.D. Eastman",@"K.K. Tung",@"Arthur Conan Doyle",@"E.B. White",@"Christina Lamb",@"Kahtryn Stocket",@"J.K. Rowling"];
+    NSArray *authors = @[@"Orson Scott Card",@"J.R.R. Toklien",@"Walter Isaacson",@"P.D. Eastman",@"K.K. Tung",@"Arthur Conan Doyle",@"E.B. White",@"Christina Lamb",@"Kathryn Stocket",@"J.K. Rowling"];
     
     //create the library with shelves by section names
     //NSLog (@"Creating Library with Shelves");
