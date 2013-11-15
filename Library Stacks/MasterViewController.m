@@ -11,6 +11,7 @@
 #import "Shelf.h"
 #import "Book.h"
 #import "DetailViewController.h"
+#import "editButton.h"
 
 @implementation MasterViewController
 
@@ -18,6 +19,7 @@
 @synthesize parent;
 @synthesize itemInputController;
 @synthesize addedObjectName;
+@synthesize editPath;
 
 - (void)setDetailItems:(NSMutableArray*) newDetailItem setDetailParent: (NSObject*) newParent
 {
@@ -56,7 +58,7 @@
 
 - (void)insertNewObject:(id)sender
 {
-
+    self.editPath = NULL;
     itemInputController = [[ItemInputController alloc] init];
     if ( [self.title isEqualToString:@"LibraryView"]) {
         itemInputController.navTitle = @"New Library";
@@ -73,8 +75,20 @@
 }
 
 -(void) dismissItemInputController: (NSString *)saveObjectName {
-    self.addedObjectName = saveObjectName;
-    [self addObjectData];
+    if ( self.editPath ) {
+        if ( [_objects[self.editPath.row] isKindOfClass:[Library class]] ) {
+            [(Library*)_objects[self.editPath.row] setLibraryName:saveObjectName];
+        } else if ( [_objects[self.editPath.row] isKindOfClass:[Shelf class]] ) {
+            [(Shelf*)_objects[self.editPath.row] setSection:saveObjectName];
+        }
+        
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:self.editPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        self.editPath = NULL;
+    } else {
+        self.addedObjectName = saveObjectName;
+        [self addObjectData];
+    }
+
 }
 
 - (void) addObjectData {
@@ -90,14 +104,18 @@
         [newLib  setLibraryName:objectName];
         [_objects insertObject:newLib atIndex:0];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.tableView endUpdates];
     } else if ( [self.title isEqualToString:@"ShelfView"]) {
         Shelf *newShelf = [[Shelf new] initWithSectionName: objectName];
         [newShelf setLocation: (Library*)parent];
         [(Library*)parent addShelf: newShelf];
         [_objects insertObject:newShelf atIndex:0];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.tableView endUpdates];
     } else if ( [self.title isEqualToString:@"BookView"]) {
         NSString *bookTitle = @"New Title";
         NSString *bookAuthor = @"New Author";
@@ -110,8 +128,12 @@
         [newBook enShelf: (Shelf*)parent];
         [_objects insertObject:newBook atIndex:0];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
     }
+    [self.tableView reloadData];
+    
 }
 
 #pragma mark - Table View
@@ -128,19 +150,56 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView
-                             dequeueReusableCellWithIdentifier:@"Cell"];
-    if ( [_objects[indexPath.row] isKindOfClass:[Library class]] ) {
-        Library *lib = [_objects objectAtIndex:indexPath.row];
-        cell.textLabel.text = [lib getLibraryName];
-    } else if ( [_objects[indexPath.row] isKindOfClass:[Shelf class]] ) {
-        Shelf *shelf = [_objects objectAtIndex:indexPath.row];
-        cell.textLabel.text = [shelf getSection];
-    } else if ( [_objects[indexPath.row] isKindOfClass:[Book class]] ) {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
+    if ( [_objects[indexPath.row] isKindOfClass:[Book class]] ) {
         Book *book = [_objects objectAtIndex:indexPath.row];
         cell.textLabel.text = [book getTitle];
+    } else {
+    
+        CGRect cellRect = [cell bounds];
+        CGFloat cellHeight = cellRect.size.height;
+        
+        UIImage *btnImage = [UIImage imageNamed:@"edit.png"];
+        
+        editButton *editBut = [[editButton alloc] initWithFrame:CGRectMake(10, (cellHeight/2)-10, 20, 20)];
+        [editBut setImage:btnImage forState:UIControlStateNormal];
+        
+        [editBut setUserData: indexPath];
+        [editBut addTarget:self action:@selector(editButtonPressed:) forControlEvents:(UIControlEvents)UIControlEventTouchDown];
+        [cell addSubview:editBut];
+        
+        cell.indentationWidth = 30;
+        if ( [_objects[indexPath.row] isKindOfClass:[Library class]] ) {
+            Library *lib = [_objects objectAtIndex:indexPath.row];
+            cell.textLabel.text = [lib getLibraryName];
+        } else if ( [_objects[indexPath.row] isKindOfClass:[Shelf class]] ) {
+            Shelf *shelf = [_objects objectAtIndex:indexPath.row];
+            cell.textLabel.text = [shelf getSection];
+        }
     }
     return cell;
+}
+
+-(void) editButtonPressed:(editButton*)sender {
+    itemInputController = [[ItemInputController alloc] init];
+    itemInputController.edittingObject = YES;
+    
+    
+    NSIndexPath *thePath = sender.userData;
+    self.editPath = thePath;
+    
+    if ( [self.title isEqualToString:@"LibraryView"]) {
+        itemInputController.navTitle = @"Update Library";
+        itemInputController.theTextField.text = [(Library*)_objects[thePath.row] getLibraryName];
+    } else if ( [self.title isEqualToString:@"ShelfView"]) {
+        itemInputController.navTitle = @"Update Shelf";
+        itemInputController.theTextField.text = [(Shelf*)_objects[thePath.row] getSection];
+    }
+    itemInputController.myInputDelegate = self;
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: itemInputController];
+    [[self navigationController] presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,29 +222,6 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-*/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

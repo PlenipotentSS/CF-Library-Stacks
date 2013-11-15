@@ -11,12 +11,15 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController <ItemInputDelegate>
+@interface MasterViewController : UITableViewController <ItemInputDelegate> {
+    NSIndexPath *editPath;
+}
 
 @property (strong) NSMutableArray *objects;
 @property(strong) NSObject *parent;
 @property(strong) NSString *addedObjectName;
 @property(strong) ItemInputController *itemInputController;
+@property(strong) NSIndexPath *editPath;
 
 - (void) addObjectData;
 - (void)setDetailItems:(NSMutableArray*)newDetailItem setDetailParent: (NSObject*) newParent;

@@ -148,7 +148,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a0j-5r-scW" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="757" y="194"/>
+            <point key="canvasLocation" x="799" y="64"/>
         </scene>
         <!--Master View Controller - BookView-->
         <scene sceneID="sMm-88-6Js">

@@ -20,6 +20,7 @@
 @property(strong) UITextField *theTextField;
 @property(strong) UITextField *secondTextField;
 @property BOOL addingABook;
+@property BOOL edittingObject;
 
 -(void)saveInfo:sender;
 @end
