@@ -46,7 +46,7 @@
  *
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [_objects count];
 }
 
 /*
@@ -54,7 +54,15 @@
  *
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_objects count]-1;
+    return [[[_objects objectAtIndex:section] getShelves] count]-offset;
+}
+
+/*
+ *  gives the names of the sections (this case Library Names)
+ *
+ */
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [[_objects objectAtIndex:section] getLibraryName];
 }
 
 /*
@@ -66,7 +74,7 @@
 {
     if([self.shelfDelegate respondsToSelector:@selector(dismissShelfOptionController:)])
     {
-        [self.shelfDelegate dismissShelfOptionController: _objects[indexPath.row+offset]];
+        [self.shelfDelegate dismissShelfOptionController: [[[_objects objectAtIndex:indexPath.section] getShelves] objectAtIndex:indexPath.row+offset]];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -82,7 +90,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-    Shelf *theShelf = [_objects objectAtIndex:indexPath.row+offset];
+    Library *thisLibrary = [_objects objectAtIndex:indexPath.section];
+    Shelf *theShelf = [[thisLibrary getShelves] objectAtIndex:(indexPath.row+offset)];
     cell.textLabel.text = [theShelf getSection];
     
     return cell;

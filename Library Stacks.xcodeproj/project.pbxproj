@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D22C9C831836E15900536FEA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D22C9C821836E15900536FEA /* libz.dylib */; };
 		D25546591834FDD2005BCD97 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC981834D2FE006D19CF /* libTestFlight.a */; };
 		D272EC521834C1F0006D19CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC511834C1F0006D19CF /* Foundation.framework */; };
 		D272EC541834C1F0006D19CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D272EC531834C1F0006D19CF /* CoreGraphics.framework */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D22C9C821836E15900536FEA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D272EC4E1834C1F0006D19CF /* Library Stacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Library Stacks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D272EC511834C1F0006D19CF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D272EC531834C1F0006D19CF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -88,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D22C9C831836E15900536FEA /* libz.dylib in Frameworks */,
 				D25546591834FDD2005BCD97 /* libTestFlight.a in Frameworks */,
 				D272EC541834C1F0006D19CF /* CoreGraphics.framework in Frameworks */,
 				D272EC561834C1F0006D19CF /* UIKit.framework in Frameworks */,
@@ -130,6 +133,7 @@
 		D272EC501834C1F0006D19CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D22C9C821836E15900536FEA /* libz.dylib */,
 				D272EC511834C1F0006D19CF /* Foundation.framework */,
 				D272EC531834C1F0006D19CF /* CoreGraphics.framework */,
 				D272EC551834C1F0006D19CF /* UIKit.framework */,
@@ -255,6 +259,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Steven Stevenson";
 				TargetAttributes = {
+					D272EC4D1834C1F0006D19CF = {
+						DevelopmentTeam = 2S283D3328;
+					};
 					D272EC741834C1F0006D19CF = {
 						TestTargetID = D272EC4D1834C1F0006D19CF;
 					};
@@ -382,7 +389,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -422,7 +429,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -433,6 +440,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -444,6 +452,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steven Stevenson (G72SQQ59H2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Library Stacks/Library Stacks-Prefix.pch";
 				INFOPLIST_FILE = "Library Stacks/Library Stacks-Info.plist";
@@ -453,6 +463,7 @@
 					"/Users/OmniGlot/Dropbox/Xcode\\ projects/Library\\ Stacks/Library\\ Stacks",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FFDB82BD-5220-4B35-AB01-BA7A600FB80C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -463,6 +474,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steven Stevenson (G72SQQ59H2)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Library Stacks/Library Stacks-Prefix.pch";
 				INFOPLIST_FILE = "Library Stacks/Library Stacks-Info.plist";
@@ -472,6 +485,7 @@
 					"/Users/OmniGlot/Dropbox/Xcode\\ projects/Library\\ Stacks/Library\\ Stacks",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FFDB82BD-5220-4B35-AB01-BA7A600FB80C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

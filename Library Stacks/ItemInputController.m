@@ -13,6 +13,7 @@
 #import "ItemInputController.h"
 #import "MasterViewController.h"
 #import "Library.h"
+#import "AppDelegate.h"
 
 @implementation ItemInputController
 
@@ -114,14 +115,16 @@
  *
  */
 -(void) putBookOnShelf:(UIButton*)sender {
-    Library *thisLibrary = [[updateBookObject getLocation] getLocation];
     [enShelfBut setAlpha:.2];
     [unShelfBut setAlpha:1.0];
     enShelfBut.enabled = NO;
     unShelfBut.enabled = YES;
     
     EnShelfListViewController  *shelfListController = [[EnShelfListViewController alloc] init];
-    shelfListController.objects = [[NSMutableArray alloc] initWithArray:[thisLibrary getShelves]];
+    
+    AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    shelfListController.objects = [[NSMutableArray alloc] initWithArray: del.topMasterController.objects];
     shelfListController.shelfDelegate = self;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: shelfListController];

@@ -21,6 +21,7 @@
 @synthesize objects = _objects;
 @synthesize parent;
 @synthesize itemInputController;
+@synthesize previous_vc;
 @synthesize addedObjectName;
 @synthesize editPath;
 @synthesize updateNeeded;
@@ -58,6 +59,10 @@
  *
  */
 - (void)viewWillAppear:(BOOL)animated {
+    if ( [_objects count] > 0 && [[_objects objectAtIndex:0] isKindOfClass:[Book class]]){
+        previous_vc.objects = [[NSMutableArray alloc] initWithArray:[[[[_objects objectAtIndex:0] getLocation] getLocation] getShelves]];
+        previous_vc.title = [[[[_objects objectAtIndex:0] getLocation] getLocation] getLibraryName];
+    }
     [self.tableView reloadData];
 }
 
@@ -293,12 +298,14 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSMutableArray *books = [[NSMutableArray alloc] initWithArray:[_objects[indexPath.row] getBooks]];
         [[segue destinationViewController] setDetailItems:books setDetailParent: _objects[indexPath.row]];
+        [[segue destinationViewController] setPrevious_vc:self];
         UINavigationItem *theNav = [[segue destinationViewController] navigationItem];
         theNav.title = [_objects[indexPath.row] getSection];
     }  else if ([[segue identifier] isEqualToString:@"showAllShelves"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSMutableArray *shelves = [[NSMutableArray alloc] initWithArray:[_objects[indexPath.row] getShelves]];
         [[segue destinationViewController] setDetailItems:shelves setDetailParent: _objects[indexPath.row]];
+        [[segue destinationViewController] setPrevious_vc:self];
         UINavigationItem *theNav = [[segue destinationViewController] navigationItem];
         theNav.title = [_objects[indexPath.row] getLibraryName];
     }

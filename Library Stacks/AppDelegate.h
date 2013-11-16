@@ -9,8 +9,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MasterViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong) MasterViewController *topMasterController;
 
 
 

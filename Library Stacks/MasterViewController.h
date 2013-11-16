@@ -23,6 +23,7 @@
 @property(strong) NSObject *parent;
 @property(strong) NSString *addedObjectName;
 @property(strong) ItemInputController *itemInputController;
+@property (strong, nonatomic) MasterViewController *previous_vc;
 @property(strong) NSIndexPath *editPath;
 @property BOOL updateNeeded;
 

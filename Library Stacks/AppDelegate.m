@@ -9,20 +9,21 @@
 //
 
 #import "AppDelegate.h"
-//#import "TestFlight.h"
-#import "MasterViewController.h"
+#import "TestFlight.h"
 #import "Library.h"
 #import "Shelf.h"
 #import "Book.h"
 
 @implementation AppDelegate
 
+@synthesize topMasterController;
+
 /*
  *  Create initial Library/Shelf and Book variables for viewing
  *
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //[TestFlight takeOff:@"a86439e2-9ce8-4156-90b9-d644b00b7182"];
+    [TestFlight takeOff:@"a86439e2-9ce8-4156-90b9-d644b00b7182"];
     
     NSArray *sectionNames = @[@"Fiction",@"Non-Fiction",@"Children",@"Fantasy",@"Education"];
     NSArray *titles = @[@"Ender's Game", @"Lord of the Rings", @"Steve Jobs", @"Go Dog Go", @"Topics in Mathematical Models", @"Sherlock Homes",@"Charlotte's Web",@"I am Malala",@"The Help",@"Harry Potter"];
@@ -57,15 +58,8 @@
     NSMutableArray *libraries = [[NSMutableArray alloc] initWithArray: @[myLibrary]];
     
     UINavigationController * navController = (UINavigationController *) self.window.rootViewController;
-    MasterViewController * masterController = [navController.viewControllers objectAtIndex:0];
-    masterController.objects = libraries;
-    
-    // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-        UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-        splitViewController.delegate = (id)navigationController.topViewController;
-    }
+    self.topMasterController = [navController.viewControllers objectAtIndex:0];
+    self.topMasterController.objects = libraries;
     
     return YES;
 }
